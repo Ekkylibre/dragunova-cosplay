@@ -7,7 +7,7 @@ const questions = [
   {
     question: "Comment as-tu découvert le cosplay ?",
     reponse:
-      "Erreur 404 : souvenir non trouvé. Cette réponse n'a pas encore été débloquée. Nova, si tu lis ceci, envoie ta version au dev et elle sera déployée au prochain patch !",
+      "Fan de Lara Croft depuis des années, je trainais souvent sur le site Captain Alban à chercher toutes sortes d'infos sur Lara et je suis tombée sur les « Lara Amateurs ». Une cosplayeuse en particulier a retenu mon attention : Illyne. Je me suis ensuite intéressée à ce qu'elle faisait, ses costumes, etc., et je me suis dit : pourquoi pas moi ? Je me suis tout simplement lancée.",
   },
   {
     question: "Comment choisis-tu tes personnages ?",

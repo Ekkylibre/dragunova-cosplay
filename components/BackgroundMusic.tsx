@@ -70,26 +70,45 @@ function loadYouTubeAPI(): Promise<void> {
   });
 }
 
+function readStoredEnabled(): boolean {
+  const stored = localStorage.getItem(STORAGE_KEY_ENABLED);
+  return stored !== null ? stored === "true" : true;
+}
+
+function readStoredVolume(): number {
+  const stored = localStorage.getItem(STORAGE_KEY_VOLUME);
+  if (stored === null) return DEFAULT_VOLUME;
+  const v = Math.min(100, Math.max(0, Number(stored)));
+  return Number.isNaN(v) ? DEFAULT_VOLUME : v;
+}
+
 export function MusicProvider({ children }: { children: React.ReactNode }) {
   const playerRef = useRef<YTPlayer | null>(null);
-  const volumeRef = useRef(DEFAULT_VOLUME);
   const [ready, setReady] = useState(false);
+  /** Valeurs par défaut identiques serveur/client — localStorage lu après montage. */
   const [enabled, setEnabled] = useState(true);
   const [volume, setVolumeState] = useState(DEFAULT_VOLUME);
+  const enabledRef = useRef(true);
+  const volumeRef = useRef(DEFAULT_VOLUME);
+  /** Bloque toute reprise (autoplay, clics) pendant l'easter egg piano. */
+  const overlayPausedRef = useRef(false);
 
   useEffect(() => {
-    const storedEnabled = localStorage.getItem(STORAGE_KEY_ENABLED);
-    if (storedEnabled !== null) setEnabled(storedEnabled === "true");
-
-    const storedVolume = localStorage.getItem(STORAGE_KEY_VOLUME);
-    if (storedVolume !== null) {
-      const v = Math.min(100, Math.max(0, Number(storedVolume)));
-      if (!Number.isNaN(v)) {
-        volumeRef.current = v;
-        setVolumeState(v);
-      }
-    }
+    const storedEnabled = readStoredEnabled();
+    const storedVolume = readStoredVolume();
+    enabledRef.current = storedEnabled;
+    volumeRef.current = storedVolume;
+    setEnabled(storedEnabled);
+    setVolumeState(storedVolume);
   }, []);
+
+  useEffect(() => {
+    enabledRef.current = enabled;
+  }, [enabled]);
+
+  useEffect(() => {
+    volumeRef.current = volume;
+  }, [volume]);
 
   const applyVolume = useCallback((v: number) => {
     volumeRef.current = v;
@@ -99,7 +118,7 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const startPlayback = useCallback(() => {
-    if (!playerRef.current) return;
+    if (!playerRef.current || overlayPausedRef.current) return;
     playerRef.current.unMute();
     playerRef.current.setVolume(volumeRef.current);
     playerRef.current.playVideo();
@@ -131,6 +150,15 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
             playerRef.current = e.target;
             e.target.setVolume(volumeRef.current);
             setReady(true);
+            if (
+              enabledRef.current &&
+              volumeRef.current > 0 &&
+              !overlayPausedRef.current
+            ) {
+              e.target.unMute();
+              e.target.setVolume(volumeRef.current);
+              e.target.playVideo();
+            }
           },
         },
       });
@@ -144,31 +172,65 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const play = useCallback(() => {
-    if (!playerRef.current || !enabled || volumeRef.current === 0) return;
+    if (
+      !playerRef.current ||
+      !enabledRef.current ||
+      volumeRef.current === 0 ||
+      overlayPausedRef.current
+    )
+      return;
     startPlayback();
-  }, [enabled, startPlayback]);
+  }, [startPlayback]);
+
+  /** Démarre par défaut ; repli si le navigateur bloque l'autoplay. */
+  useEffect(() => {
+    if (!ready || !enabled || volume === 0) return;
+
+    play();
+
+    const unlock = () => {
+      if (!overlayPausedRef.current) play();
+    };
+    document.addEventListener("pointerdown", unlock, { once: true });
+    document.addEventListener("keydown", unlock, { once: true });
+
+    return () => {
+      document.removeEventListener("pointerdown", unlock);
+      document.removeEventListener("keydown", unlock);
+    };
+  }, [ready, enabled, volume, play]);
 
   const pause = useCallback(() => {
+    overlayPausedRef.current = true;
     if (!playerRef.current) return;
     playerRef.current.pauseVideo();
     playerRef.current.mute();
   }, []);
 
   const resume = useCallback(() => {
+    overlayPausedRef.current = false;
     if (!playerRef.current || !enabled || volumeRef.current === 0) return;
     startPlayback();
   }, [enabled, startPlayback]);
 
+  /** Coupe la musique dès l'ouverture de l'easter egg (avant le re-render React). */
+  useEffect(() => {
+    const onQuest = () => pause();
+    window.addEventListener("dragunova-quest", onQuest);
+    return () => window.removeEventListener("dragunova-quest", onQuest);
+  }, [pause]);
+
   const toggle = useCallback(() => {
     setEnabled((prev) => {
       const next = !prev;
+      enabledRef.current = next;
       localStorage.setItem(STORAGE_KEY_ENABLED, String(next));
 
       if (!playerRef.current) return next;
 
-      if (next && volumeRef.current > 0) {
+      if (next && volumeRef.current > 0 && !overlayPausedRef.current) {
         startPlayback();
-      } else {
+      } else if (!next) {
         playerRef.current.pauseVideo();
         playerRef.current.mute();
       }
@@ -188,6 +250,7 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
         playerRef.current.pauseVideo();
         playerRef.current.mute();
         setEnabled(false);
+        enabledRef.current = false;
         localStorage.setItem(STORAGE_KEY_ENABLED, "false");
         return;
       }
@@ -195,6 +258,7 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
       playerRef.current.unMute();
       setEnabled((wasEnabled) => {
         if (!wasEnabled) {
+          enabledRef.current = true;
           localStorage.setItem(STORAGE_KEY_ENABLED, "true");
           startPlayback();
           return true;

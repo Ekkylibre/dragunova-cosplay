@@ -389,12 +389,16 @@ export default function PianoQuest() {
 
   return (
     <div
-      className="fixed inset-0 z-[70] flex items-center justify-center bg-ink/92 backdrop-blur-sm p-4"
+      className="fixed inset-0 z-[70] flex items-center justify-center bg-ink/92 backdrop-blur-sm p-4 cursor-pointer"
       role="dialog"
       aria-modal="true"
       aria-label="Tutoriel Metal Gear Solid Main Theme"
+      onClick={close}
     >
-      <div className="w-full max-w-2xl border border-violet/40 bg-ink-soft shadow-[0_0_48px_rgba(157,123,255,0.2)]">
+      <div
+        className="w-full max-w-2xl border border-violet/40 bg-ink-soft shadow-[0_0_48px_rgba(157,123,255,0.2)] cursor-default"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="flex items-center justify-between border-b border-paper/10 px-5 py-3">
           <div>
             <p className="font-mono text-[0.55rem] uppercase tracking-[0.35em] text-cyan">
