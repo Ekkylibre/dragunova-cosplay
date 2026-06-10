@@ -9,11 +9,13 @@ import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
 import MouseGlow from "@/components/MouseGlow";
 import { MusicProvider } from "@/components/BackgroundMusic";
+import PianoQuest from "@/components/PianoQuest";
 
 export default function Home() {
   return (
     <MusicProvider>
     <main>
+      <PianoQuest />
       <ScrollProgress />
       <MouseGlow />
       <Nav />

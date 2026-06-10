@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { triggerPianoQuest } from "./PianoQuest";
 
 const links = [
   { href: "#book", label: "Galerie" },
@@ -9,9 +10,28 @@ const links = [
   { href: "#contact", label: "Contact" },
 ];
 
+const STAR_CLICKS = 5;
+const STAR_WINDOW_MS = 2500;
+
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const starClicks = useRef(0);
+  const starTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const onStarClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    starClicks.current++;
+    if (starTimer.current) clearTimeout(starTimer.current);
+    starTimer.current = setTimeout(() => {
+      starClicks.current = 0;
+    }, STAR_WINDOW_MS);
+    if (starClicks.current >= STAR_CLICKS) {
+      starClicks.current = 0;
+      triggerPianoQuest();
+    }
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -35,7 +55,16 @@ export default function Nav() {
           className="font-display text-lg md:text-xl tracking-[0.18em] font-medium"
         >
           DRAGUNOVA
-          <span className="text-violet"> ✦</span>
+          <span
+            role="button"
+            tabIndex={0}
+            onClick={onStarClick}
+            onKeyDown={(e) => e.key === "Enter" && onStarClick(e as unknown as React.MouseEvent)}
+            className="text-violet cursor-default select-none"
+            aria-hidden
+          >
+            {" "}✦
+          </span>
         </a>
 
         {/* Liens desktop */}

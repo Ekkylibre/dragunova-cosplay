@@ -30,6 +30,9 @@ type MusicContextValue = {
   toggle: () => void;
   setVolume: (volume: number) => void;
   play: () => void;
+  /** Pause temporaire (ex. easter egg) sans modifier les préférences. */
+  pause: () => void;
+  resume: () => void;
 };
 
 const MusicContext = createContext<MusicContextValue | null>(null);
@@ -145,6 +148,17 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
     startPlayback();
   }, [enabled, startPlayback]);
 
+  const pause = useCallback(() => {
+    if (!playerRef.current) return;
+    playerRef.current.pauseVideo();
+    playerRef.current.mute();
+  }, []);
+
+  const resume = useCallback(() => {
+    if (!playerRef.current || !enabled || volumeRef.current === 0) return;
+    startPlayback();
+  }, [enabled, startPlayback]);
+
   const toggle = useCallback(() => {
     setEnabled((prev) => {
       const next = !prev;
@@ -193,7 +207,7 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <MusicContext.Provider
-      value={{ enabled, volume, ready, toggle, setVolume, play }}
+      value={{ enabled, volume, ready, toggle, setVolume, play, pause, resume }}
     >
       {children}
       <div
