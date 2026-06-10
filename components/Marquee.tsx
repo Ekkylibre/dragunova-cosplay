@@ -13,7 +13,7 @@ const COPIES_PAR_PISTE = 3;
 
 function MarqueePiste({ idPrefix }: { idPrefix: string }) {
   return (
-    <div className="flex shrink-0 items-center gap-10">
+    <div className="flex shrink-0 items-center gap-10 pl-10">
       {Array.from({ length: COPIES_PAR_PISTE }, (_, copy) =>
         mots.map((mot, i) => (
           <span
