@@ -9,10 +9,12 @@ import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
 import MouseGlow from "@/components/MouseGlow";
 import { MusicProvider } from "@/components/BackgroundMusic";
+import LoadingScreen from "@/components/LoadingScreen";
 import PianoQuest from "@/components/PianoQuest";
 
 export default function Home() {
   return (
+    <LoadingScreen>
     <MusicProvider>
     <main>
       <PianoQuest />
@@ -28,5 +30,6 @@ export default function Home() {
       <Footer />
     </main>
     </MusicProvider>
+    </LoadingScreen>
   );
 }

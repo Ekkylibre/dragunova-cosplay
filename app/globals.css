@@ -181,6 +181,222 @@ body::after {
   will-change: transform;
 }
 
+/* ---------- Écran de chargement initial ---------- */
+@keyframes loading-rise {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.loading-rise {
+  animation: loading-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes loading-bar-fill {
+  0% {
+    width: 0%;
+  }
+  70% {
+    width: 78%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.loading-bar {
+  width: 0%;
+  animation: loading-bar-fill 2.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.loading-screen {
+  pointer-events: all;
+}
+
+/* ---------- Transition JRPG (hommage cristal / spirale) ---------- */
+@keyframes ff-flash {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.35;
+    background: #e9ecf8;
+  }
+  35% {
+    opacity: 0;
+  }
+}
+
+.ff-enter-fx {
+  visibility: hidden;
+}
+
+.ff-enter-fx-active {
+  visibility: visible;
+}
+
+.ff-enter-fx .ff-flash,
+.ff-enter-fx .ff-crystal,
+.ff-enter-fx .ff-crystal-glow,
+.ff-enter-fx .ff-unmask {
+  animation: none;
+}
+
+.ff-enter-fx-active .ff-flash {
+  animation: ff-flash 0.95s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes ff-crystal-pulse {
+  0% {
+    transform: translate(-50%, -50%) rotate(45deg) scale(0);
+    opacity: 0;
+  }
+  22% {
+    transform: translate(-50%, -50%) rotate(45deg) scale(1.15);
+    opacity: 1;
+  }
+  45% {
+    transform: translate(-50%, -50%) rotate(45deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(45deg) scale(2.8);
+    opacity: 0;
+  }
+}
+
+.ff-crystal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2.75rem;
+  height: 2.75rem;
+  background: linear-gradient(
+    135deg,
+    rgba(103, 232, 249, 0.95) 0%,
+    rgba(157, 123, 255, 0.9) 50%,
+    rgba(255, 255, 255, 0.85) 100%
+  );
+  box-shadow:
+    0 0 24px rgba(103, 232, 249, 0.9),
+    0 0 48px rgba(157, 123, 255, 0.5),
+    inset 0 0 12px rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+}
+
+.ff-enter-fx-active .ff-crystal {
+  animation: ff-crystal-pulse 0.95s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+}
+
+.ff-crystal-glow {
+  left: 50%;
+  top: 50%;
+  width: 8rem;
+  height: 8rem;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle,
+    rgba(103, 232, 249, 0.35) 0%,
+    rgba(157, 123, 255, 0.15) 45%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.ff-enter-fx-active .ff-crystal-glow {
+  animation: ff-crystal-pulse 0.95s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+}
+
+.ff-enter-fx-active .ff-unmask {
+  animation: ff-unmask 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  pointer-events: none;
+}
+
+@keyframes ff-enter-panel-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.ff-enter-panel,
+.ff-enter-panel-static {
+  border: 1px solid rgba(103, 232, 249, 0.35);
+  background: linear-gradient(
+    180deg,
+    rgba(11, 13, 28, 0.92) 0%,
+    rgba(5, 6, 14, 0.96) 100%
+  );
+  box-shadow:
+    0 0 0 1px rgba(157, 123, 255, 0.15),
+    0 0 40px rgba(103, 232, 249, 0.12);
+}
+
+.ff-enter-panel {
+  animation: ff-enter-panel-in 0.65s ease-out forwards;
+}
+
+/* Reste visible pendant l'animation, disparaît avec l'overlay à la fin */
+.ff-enter-panel-hold {
+  animation: ff-enter-panel-hold 1s ease-out forwards;
+}
+
+@keyframes ff-enter-panel-hold {
+  0%,
+  88% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.ff-enter-btn {
+  text-shadow:
+    0 0 16px rgba(103, 232, 249, 0.75),
+    0 0 32px rgba(157, 123, 255, 0.35);
+}
+
+@keyframes ff-unmask {
+  0% {
+    -webkit-mask-image: radial-gradient(
+      circle at 50% 50%,
+      transparent 0%,
+      black 0%
+    );
+    mask-image: radial-gradient(circle at 50% 50%, transparent 0%, black 0%);
+    opacity: 1;
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    -webkit-mask-image: radial-gradient(
+      circle at 50% 50%,
+      transparent 72%,
+      black 100%
+    );
+    mask-image: radial-gradient(
+      circle at 50% 50%,
+      transparent 72%,
+      black 100%
+    );
+    opacity: 0;
+  }
+}
+
 /* ---------- Texte vertical ---------- */
 .writing-vertical {
   writing-mode: vertical-rl;

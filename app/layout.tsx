@@ -18,10 +18,7 @@ const grotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
-  title: {
-    default: siteConfig.title,
-    template: `%s | ${siteConfig.name}`,
-  },
+  title: siteConfig.title,
   description: siteConfig.description,
   keywords: [...siteConfig.keywords],
   authors: [{ name: "Dragunova", url: getSiteUrl() }],

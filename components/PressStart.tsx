@@ -1,5 +1,6 @@
 "use client";
 
+import { unlockGameAudio } from "@/lib/gameAudio";
 import { useState } from "react";
 import { useMusic } from "./BackgroundMusic";
 
@@ -34,6 +35,7 @@ export default function PressStart() {
   const onPress = () => {
     if (pressed) return;
     setPressed(true);
+    void unlockGameAudio();
     try {
       playStartSound();
     } catch {

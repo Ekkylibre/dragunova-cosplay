@@ -2,7 +2,7 @@
 
 export const siteConfig = {
   name: "Dragunova Cosplay",
-  title: "Dragunova Cosplay | Book photo",
+  title: "Dragunova Cosplay",
   description:
     "Book photo de Dragunova Cosplay : portraits et personnages incarnés entre fantasy, gaming, comics et pop culture. Cosplayeuse et musicienne depuis 2013.",
   locale: "fr_FR",

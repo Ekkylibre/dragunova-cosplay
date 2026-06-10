@@ -1,6 +1,10 @@
 "use client";
 
 import {
+  ensureAudioUnlockListeners,
+  unlockGameAudio,
+} from "@/lib/gameAudio";
+import {
   createContext,
   useCallback,
   useContext,
@@ -103,6 +107,10 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
+    ensureAudioUnlockListeners();
+  }, []);
+
+  useEffect(() => {
     enabledRef.current = enabled;
   }, [enabled]);
 
@@ -119,6 +127,7 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
 
   const startPlayback = useCallback(() => {
     if (!playerRef.current || overlayPausedRef.current) return;
+    void unlockGameAudio();
     playerRef.current.unMute();
     playerRef.current.setVolume(volumeRef.current);
     playerRef.current.playVideo();
@@ -189,6 +198,7 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
     play();
 
     const unlock = () => {
+      void unlockGameAudio();
       if (!overlayPausedRef.current) play();
     };
     document.addEventListener("pointerdown", unlock, { once: true });
