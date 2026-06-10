@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Dragunova Cosplay — Site vitrine / Book photo
 
-## Getting Started
+Site vitrine artistique pour une cosplayeuse, construit avec **Next.js** et **Tailwind CSS**. Direction artistique « Le Codex » : un grimoire numérique entre fantasy et gaming — nuit arcanique animée, particules magiques, titre à reflets, cartes holographiques inclinables, fiche de personnage RPG et lightbox.
 
-First, run the development server:
+## Lancer le projet
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Puis ouvrez [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Remplacer les photos
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Les photos actuelles sont des **placeholders** (picsum.photos). Pour mettre les vraies photos :
 
-## Learn More
+1. Placez vos images dans le dossier `public/photos/`.
+2. Ouvrez `lib/photos.ts` et remplacez les `src` par vos fichiers, par exemple :
 
-To learn more about Next.js, take a look at the following resources:
+```ts
+src: "/photos/mononoke-01.jpg",
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Mettez à jour `alt`, `serie`, `personnage` et `annee` pour chaque photo.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Les photos du hero et de la section « À propos » se changent directement dans `components/Hero.tsx` et `components/About.tsx`.
 
-## Deploy on Vercel
+## Personnaliser
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Nom & textes** : `components/Hero.tsx`, `About.tsx`, `Contact.tsx`, `Nav.tsx`
+- **Questions / réponses** : tableau `questions` dans `components/Interview.tsx`
+- **Couleurs & ambiance** : variables dans `app/globals.css` (bloc `@theme`)
+- **Polices** : `app/layout.tsx` (Cinzel + Space Grotesk via `next/font`)
+- **Réseaux sociaux & email** : `components/Contact.tsx`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Structure
+
+```
+app/
+  layout.tsx      # Polices, metadata, structure HTML
+  page.tsx        # Assemblage des sections
+  globals.css     # Thème, grain, animations
+components/
+  Nav.tsx         # Navigation fixe
+  Hero.tsx        # Écran d'accueil
+  Marquee.tsx     # Bandeau défilant
+  Gallery.tsx     # Galerie book + lightbox
+  About.tsx       # Présentation + statistiques
+  Interview.tsx   # Questions / réponses (accordéon)
+  Contact.tsx     # Email + réseaux
+  Footer.tsx
+lib/
+  photos.ts       # Données des photos du book
+```

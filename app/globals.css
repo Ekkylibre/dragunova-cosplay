@@ -1,26 +1,268 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-ink: #05060e;
+  --color-ink-soft: #0b0d1c;
+  --color-paper: #e9ecf8;
+  --color-paper-dim: #8e93b3;
+  --color-violet: #9d7bff;
+  --color-cyan: #67e8f9;
+  --color-ember: #f4c069;
+
+  --font-display: var(--font-cinzel);
+  --font-body: var(--font-grotesk);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+::selection {
+  background: var(--color-violet);
+  color: var(--color-ink);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-body), sans-serif;
+}
+
+/* Grain photographique sur toute la page */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- Révélation au scroll ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(2.5rem);
+  transition:
+    opacity 1s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Apparition à l'arrivée sur la page ---------- */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rise {
+  animation: rise 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ---------- Titre arcanique à reflets ---------- */
+@keyframes shimmer {
+  to {
+    background-position: -200% center;
+  }
+}
+
+.text-arcane {
+  background: linear-gradient(
+    110deg,
+    var(--color-paper) 25%,
+    var(--color-violet) 42%,
+    var(--color-cyan) 55%,
+    var(--color-paper) 75%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: shimmer 7s linear infinite;
+}
+
+/* ---------- Nappes de brume animées (aurora) ---------- */
+@keyframes aurora {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(3rem, -2.5rem) scale(1.18);
+  }
+  100% {
+    transform: translate(-2.5rem, 2rem) scale(0.94);
+  }
+}
+
+.aurora {
+  animation: aurora 16s ease-in-out infinite alternate;
+}
+
+/* ---------- Particules magiques ---------- */
+@keyframes float-up {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.9;
+  }
+  85% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-92vh);
+    opacity: 0;
+  }
+}
+
+.particle {
+  position: absolute;
+  bottom: -2vh;
+  border-radius: 9999px;
+  pointer-events: none;
+  animation: float-up linear infinite;
+}
+
+/* ---------- Press Start façon borne d'arcade ---------- */
+@keyframes press-start-blink {
+  0%,
+  64% {
+    opacity: 1;
+  }
+  65%,
+  100% {
+    opacity: 0.15;
+  }
+}
+
+.press-start-blink {
+  animation: press-start-blink 1.3s steps(1) infinite;
+}
+
+/* Clignotement rapide une fois le bouton pressé */
+@keyframes press-start-pressed {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.1;
+  }
+}
+
+.press-start-pressed {
+  animation: press-start-pressed 0.12s linear infinite;
+  text-shadow: 0 0 18px rgba(103, 232, 249, 0.8);
+}
+
+/* ---------- Défilement du bandeau marquee ---------- */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* ---------- Texte vertical ---------- */
+.writing-vertical {
+  writing-mode: vertical-rl;
+}
+
+/* ---------- Coins façon HUD ---------- */
+.hud-corners::before,
+.hud-corners::after {
+  content: "";
+  position: absolute;
+  width: 1.75rem;
+  height: 1.75rem;
+  z-index: 1;
+}
+.hud-corners::before {
+  top: -0.75rem;
+  left: -0.75rem;
+  border-top: 1px solid var(--color-cyan);
+  border-left: 1px solid var(--color-cyan);
+}
+.hud-corners::after {
+  bottom: -0.75rem;
+  right: -0.75rem;
+  border-bottom: 1px solid var(--color-violet);
+  border-right: 1px solid var(--color-violet);
+}
+
+/* ---------- Carte holographique (galerie) ---------- */
+.holo-card {
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.18s ease-out;
+  will-change: transform;
+}
+
+.holo-glare {
+  background: radial-gradient(
+    420px circle at var(--gx, 50%) var(--gy, 50%),
+    rgba(233, 236, 248, 0.16),
+    rgba(157, 123, 255, 0.06) 38%,
+    transparent 62%
+  );
+}
+
+/* ---------- Barre de défilement discrète ---------- */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ink);
+}
+::-webkit-scrollbar-thumb {
+  background: #1d2038;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-violet);
+}
+
+/* ---------- Protection basique des photos ---------- */
+.protected-photo {
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* ---------- Curseur de volume musique ---------- */
+.music-volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  background: var(--color-cyan);
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(103, 232, 249, 0.4);
+}
+
+.music-volume-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: none;
+  border-radius: 9999px;
+  background: var(--color-cyan);
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(103, 232, 249, 0.4);
 }
