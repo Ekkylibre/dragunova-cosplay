@@ -4,7 +4,7 @@ import PressStart from "./PressStart";
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-dvh flex items-center justify-center overflow-hidden">
       {/* Photo de fond, fondue dans la nuit */}
       <ProtectedImage
         src="/photos/lucy.png"
@@ -47,7 +47,7 @@ export default function Hero() {
       </div>
 
       {/* Contenu central */}
-      <div className="relative z-20 px-6 py-32 text-center max-w-5xl mx-auto">
+      <div className="relative z-20 px-6 py-24 pb-28 md:py-32 md:pb-32 text-center max-w-5xl mx-auto">
         <p
           className="rise text-[0.65rem] md:text-xs uppercase tracking-[0.55em] text-cyan"
           style={{ animationDelay: "0.15s" }}
@@ -69,11 +69,16 @@ export default function Hero() {
           Donner vie aux personnages que l&apos;on aime, le temps
           d&apos;un costume, d&apos;une pose, d&apos;une photo.
         </p>
+
+        {/* Mobile : dans le flux pour rester visible sans scroller */}
+        <div className="rise mt-10 md:hidden" style={{ animationDelay: "1s" }}>
+          <PressStart />
+        </div>
       </div>
 
-      {/* Press Start : anime, sonne et plonge vers la galerie */}
+      {/* Desktop : ancré en bas de l'écran */}
       <div
-        className="rise absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
+        className="rise absolute bottom-20 left-1/2 -translate-x-1/2 z-20 hidden md:block"
         style={{ animationDelay: "1s" }}
       >
         <PressStart />

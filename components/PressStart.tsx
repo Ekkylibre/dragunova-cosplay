@@ -52,7 +52,7 @@ export default function PressStart() {
   return (
     <button
       onClick={onPress}
-      className="group flex flex-col items-center gap-3 text-paper-dim cursor-pointer"
+      className="group text-paper-dim cursor-pointer"
       aria-label="Commencer : aller à la galerie"
     >
       <span
@@ -64,7 +64,6 @@ export default function PressStart() {
       >
         ▶ Press Start
       </span>
-      <span className="h-12 w-px bg-gradient-to-b from-cyan/60 to-transparent transition-transform duration-300 group-hover:scale-y-125 origin-top" />
     </button>
   );
 }
