@@ -8,7 +8,7 @@ export default function Hero() {
       {/* Photo de fond, fondue dans la nuit */}
       <ProtectedImage
         src="/photos/lucy.png"
-        alt="Cosplay de Lucy, Cyberpunk Edgerunners — ambiance néon en arrière-plan"
+        alt="Cosplay de Lucy, Cyberpunk — ambiance néon en arrière-plan"
         aria-hidden
         fill
         priority

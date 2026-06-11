@@ -157,28 +157,26 @@ export default function LoadingScreen({
                 <div className="ff-unmask absolute inset-0 bg-ink" />
               </div>
 
-              <div
-                className={`ff-enter-panel-static relative z-20 px-8 py-6 md:px-10 md:py-7 text-center ${
+              <button
+                type="button"
+                onClick={enterSite}
+                disabled={exiting}
+                className={`ff-enter-panel-static relative z-20 block px-8 py-6 md:px-10 md:py-7 text-center ${
                   exiting ? "ff-enter-panel-hold" : ""
-                }`}
+                } ${exiting ? "cursor-default" : "cursor-pointer"}`}
+                aria-label="Entrer sur le site"
               >
-                <p className="font-mono text-[0.5rem] uppercase tracking-[0.45em] text-cyan/80 mb-5">
+                <p className="font-mono text-[0.5rem] uppercase tracking-[0.45em] text-cyan/80 mb-5 pointer-events-none">
                   ◆ Quête acceptée ◆
                 </p>
-                <button
-                  type="button"
-                  onClick={enterSite}
-                  disabled={exiting}
-                  className={`ff-enter-btn font-display text-xl md:text-2xl tracking-[0.35em] text-paper uppercase ${
-                    exiting
-                      ? "text-cyan cursor-default"
-                      : "cursor-pointer press-start-blink hover:text-cyan"
+                <span
+                  className={`ff-enter-btn font-display text-xl md:text-2xl tracking-[0.35em] text-paper uppercase pointer-events-none ${
+                    exiting ? "text-cyan" : "press-start-blink"
                   }`}
-                  aria-label="Entrer sur le site"
                 >
                   Entrée
-                </button>
-              </div>
+                </span>
+              </button>
             </div>
           )}
         </div>

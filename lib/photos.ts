@@ -12,10 +12,10 @@ export type Photo = {
 
 export const photos: Photo[] = [
   {
-    src: "/photos/lucy.png",
-    alt: "Cosplay de Lucy de Cyberpunk Edgerunners, ambiance néon urbaine",
+    src: "/photos/lucy-gallery.png",
+    alt: "Cosplay de Lucy de Cyberpunk, ambiance néon urbaine",
     serie: "Néons",
-    personnage: "Lucy · Edgerunners",
+    personnage: "Lucy · Cyberpunk",
     annee: "2023",
     span: "md:col-span-5 md:row-span-2",
     ratio: "aspect-[3/4]",

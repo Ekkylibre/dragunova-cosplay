@@ -342,6 +342,22 @@ body::after {
   box-shadow:
     0 0 0 1px rgba(157, 123, 255, 0.15),
     0 0 40px rgba(103, 232, 249, 0.12);
+  font: inherit;
+  color: inherit;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+button.ff-enter-panel-static:not(:disabled):hover {
+  border-color: rgba(103, 232, 249, 0.55);
+  box-shadow:
+    0 0 0 1px rgba(157, 123, 255, 0.25),
+    0 0 48px rgba(103, 232, 249, 0.2);
+}
+
+button.ff-enter-panel-static:not(:disabled):hover .ff-enter-btn {
+  color: var(--color-cyan);
 }
 
 .ff-enter-panel {
