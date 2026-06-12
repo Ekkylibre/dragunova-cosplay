@@ -317,10 +317,34 @@ function MusicControls({
 
   return (
     <div
-      className="group fixed bottom-6 right-6 z-50 flex items-center border border-paper/15 bg-ink/80 backdrop-blur-sm transition-colors duration-300 hover:border-cyan/30"
+      className="group fixed bottom-6 right-6 z-50 flex flex-col items-stretch border border-paper/15 bg-ink/80 backdrop-blur-sm transition-colors duration-300 hover:border-cyan/30 focus-within:border-cyan/30"
       role="group"
       aria-label="Contrôles de la musique de fond"
     >
+      <div className="grid grid-rows-[0fr] opacity-0 transition-all duration-300 ease-out group-hover:grid-rows-[1fr] group-hover:opacity-100 group-focus-within:grid-rows-[1fr] group-focus-within:opacity-100">
+        <div className="overflow-hidden">
+          <div className="flex h-28 w-11 items-center justify-center pt-3">
+            <label className="sr-only" htmlFor="music-volume">
+              Volume de la musique
+            </label>
+            <input
+              id="music-volume"
+              type="range"
+              min={0}
+              max={100}
+              value={volume}
+              disabled={!ready}
+              onChange={(e) => onVolumeChange(Number(e.target.value))}
+              className="music-volume-slider music-volume-slider-vertical cursor-pointer disabled:cursor-wait disabled:opacity-40"
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-valuenow={volume}
+              aria-valuetext={`${volume} %`}
+            />
+          </div>
+        </div>
+      </div>
+
       <button
         onClick={onToggle}
         disabled={!ready}
@@ -332,26 +356,6 @@ function MusicControls({
       >
         {showMuted ? <IconMuted /> : <IconVolume />}
       </button>
-
-      <div className="max-w-0 overflow-hidden opacity-0 transition-all duration-300 ease-out group-hover:max-w-32 group-hover:opacity-100 group-hover:pl-3 group-focus-within:max-w-32 group-focus-within:opacity-100 group-focus-within:pl-3">
-        <label className="sr-only" htmlFor="music-volume">
-          Volume de la musique
-        </label>
-        <input
-          id="music-volume"
-          type="range"
-          min={0}
-          max={100}
-          value={volume}
-          disabled={!ready}
-          onChange={(e) => onVolumeChange(Number(e.target.value))}
-          className="music-volume-slider block h-1 w-28 cursor-pointer appearance-none rounded-full bg-paper/15 disabled:cursor-wait disabled:opacity-40"
-          aria-valuemin={0}
-          aria-valuemax={100}
-          aria-valuenow={volume}
-          aria-valuetext={`${volume} %`}
-        />
-      </div>
     </div>
   );
 }

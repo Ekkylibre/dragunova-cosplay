@@ -495,18 +495,47 @@ button.ff-enter-panel-static:not(:disabled):hover .ff-enter-btn {
 }
 
 /* ---------- Curseur de volume musique ---------- */
-.music-volume-slider::-webkit-slider-thumb {
+.music-volume-slider {
+  appearance: none;
+  background: color-mix(in srgb, var(--color-paper) 15%, transparent);
+  border-radius: 9999px;
+}
+
+.music-volume-slider-vertical {
+  width: 4px;
+  height: 7rem;
+  writing-mode: vertical-lr;
+  direction: rtl;
+}
+
+.music-volume-slider-vertical::-webkit-slider-runnable-track {
+  width: 4px;
+  height: 100%;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--color-paper) 15%, transparent);
+}
+
+.music-volume-slider-vertical::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 12px;
   height: 12px;
+  margin-left: -4px;
   border-radius: 9999px;
   background: var(--color-cyan);
   cursor: pointer;
   box-shadow: 0 0 8px rgba(103, 232, 249, 0.4);
 }
 
-.music-volume-slider::-moz-range-thumb {
+.music-volume-slider-vertical::-moz-range-track {
+  width: 4px;
+  height: 100%;
+  border: none;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--color-paper) 15%, transparent);
+}
+
+.music-volume-slider-vertical::-moz-range-thumb {
   width: 12px;
   height: 12px;
   border: none;
