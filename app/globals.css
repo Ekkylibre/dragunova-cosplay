@@ -225,7 +225,7 @@ body::after {
     opacity: 0;
   }
   12% {
-    opacity: 0.35;
+    opacity: 0.45;
     background: #e9ecf8;
   }
   35% {
@@ -259,7 +259,7 @@ body::after {
     opacity: 0;
   }
   22% {
-    transform: translate(-50%, -50%) rotate(45deg) scale(1.15);
+    transform: translate(-50%, -50%) rotate(45deg) scale(1.12);
     opacity: 1;
   }
   45% {
@@ -267,7 +267,7 @@ body::after {
     opacity: 1;
   }
   100% {
-    transform: translate(-50%, -50%) rotate(45deg) scale(2.8);
+    transform: translate(-50%, -50%) rotate(45deg) scale(5);
     opacity: 0;
   }
 }
@@ -276,8 +276,8 @@ body::after {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 4.5rem;
+  height: 4.5rem;
   background: linear-gradient(
     135deg,
     rgba(103, 232, 249, 0.95) 0%,
@@ -285,9 +285,9 @@ body::after {
     rgba(255, 255, 255, 0.85) 100%
   );
   box-shadow:
-    0 0 24px rgba(103, 232, 249, 0.9),
-    0 0 48px rgba(157, 123, 255, 0.5),
-    inset 0 0 12px rgba(255, 255, 255, 0.6);
+    0 0 40px rgba(103, 232, 249, 0.95),
+    0 0 80px rgba(157, 123, 255, 0.65),
+    inset 0 0 16px rgba(255, 255, 255, 0.6);
   pointer-events: none;
 }
 
@@ -298,15 +298,15 @@ body::after {
 .ff-crystal-glow {
   left: 50%;
   top: 50%;
-  width: 8rem;
-  height: 8rem;
+  width: 16rem;
+  height: 16rem;
   transform: translate(-50%, -50%);
   border-radius: 9999px;
   background: radial-gradient(
     circle,
-    rgba(103, 232, 249, 0.35) 0%,
-    rgba(157, 123, 255, 0.15) 45%,
-    transparent 70%
+    rgba(103, 232, 249, 0.45) 0%,
+    rgba(157, 123, 255, 0.22) 40%,
+    transparent 72%
   );
   pointer-events: none;
 }
@@ -401,13 +401,13 @@ button.ff-enter-panel-static:not(:disabled):hover .ff-enter-btn {
   100% {
     -webkit-mask-image: radial-gradient(
       circle at 50% 50%,
-      transparent 72%,
-      black 100%
+      transparent 105%,
+      black 120%
     );
     mask-image: radial-gradient(
       circle at 50% 50%,
-      transparent 72%,
-      black 100%
+      transparent 105%,
+      black 120%
     );
     opacity: 0;
   }

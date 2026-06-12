@@ -8,7 +8,7 @@ import {
 import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 
-/** Chargement ~2,2 s, puis écran Entrée (attente du clic) */
+/** Chargement ~2,2 s, puis écran d'accès (attente du clic) */
 const SHOW_MS = 2200;
 const EXIT_MS = 1000;
 
@@ -82,7 +82,7 @@ export default function LoadingScreen({
           aria-modal={phase === "transition"}
           aria-live="polite"
           aria-label={
-            phase === "loading" ? "Chargement du site" : "Entrée dans le site"
+            phase === "loading" ? "Chargement du site" : "Accès au site"
           }
         >
           {phase === "loading" && (
@@ -164,17 +164,17 @@ export default function LoadingScreen({
                 className={`ff-enter-panel-static relative z-20 block px-8 py-6 md:px-10 md:py-7 text-center ${
                   exiting ? "ff-enter-panel-hold" : ""
                 } ${exiting ? "cursor-default" : "cursor-pointer"}`}
-                aria-label="Entrer sur le site"
+                aria-label="Accéder au site"
               >
                 <p className="font-mono text-[0.5rem] uppercase tracking-[0.45em] text-cyan/80 mb-5 pointer-events-none">
                   ◆ Quête acceptée ◆
                 </p>
                 <span
-                  className={`ff-enter-btn font-display text-xl md:text-2xl tracking-[0.35em] text-paper uppercase pointer-events-none ${
+                  className={`ff-enter-btn font-display text-lg md:text-xl tracking-[0.22em] text-paper uppercase pointer-events-none ${
                     exiting ? "text-cyan" : "press-start-blink"
                   }`}
                 >
-                  Entrée
+                  Accès autorisé
                 </span>
               </button>
             </div>
