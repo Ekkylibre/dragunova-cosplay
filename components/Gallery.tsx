@@ -38,19 +38,13 @@ export default function Gallery() {
 
   return (
     <section id="book" className="mx-auto max-w-7xl px-6 py-20 md:py-32">
-      <Reveal className="mb-12 md:mb-20 flex items-end justify-between gap-6">
-        <div>
-          <p className="text-xs uppercase tracking-[0.4em] text-cyan mb-5">
-            ✦ Galerie
-          </p>
-          <h2 className="font-display text-4xl md:text-6xl font-medium">
-            La Galerie
-          </h2>
-        </div>
-        <p className="hidden md:block max-w-xs text-sm text-paper-dim font-light leading-relaxed text-right">
-          Une sélection de mes cosplays préférés, entre jeux vidéo, comics et
-          fantasy. Cliquez sur une photo pour l&apos;afficher en grand.
+      <Reveal className="mb-12 md:mb-20">
+        <p className="text-xs uppercase tracking-[0.4em] text-cyan mb-5">
+          ✦ Galerie
         </p>
+        <h2 className="font-display text-4xl md:text-6xl font-medium">
+          La Galerie
+        </h2>
       </Reveal>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
